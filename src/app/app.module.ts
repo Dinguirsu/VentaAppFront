@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HomeComponent } from './home/home.component';
 import { ClienteComponent } from './cliente/cliente.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DialogClienteComponent } from './cliente/dialog/dialogcliente.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -16,6 +16,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { DialogDeleteComponent } from './common/delete/dialogdelete.component';
+import { MatCardModule } from '@angular/material/card'
+import { LoginComponent } from './Login/login.component';
+import { JwtInterceptor } from './Security/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { DialogDeleteComponent } from './common/delete/dialogdelete.component';
     HomeComponent,
     ClienteComponent,
     DialogClienteComponent,
-    DialogDeleteComponent
+    DialogDeleteComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +40,12 @@ import { DialogDeleteComponent } from './common/delete/dialogdelete.component';
     MatButtonModule,
     MatInputModule,
     MatSnackBarModule,
+    MatCardModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
